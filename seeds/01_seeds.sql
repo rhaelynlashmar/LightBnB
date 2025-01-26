@@ -3,7 +3,7 @@ VALUES ('Darryl Mckael', 'dmme@gmail.com', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.
 ('Eva Stanley', 'es666@gmail.com', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.'),
 ('Dominic Parks', 'meowmeowmeow@shaw.ca', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.');
 
-INSERT INTO properties (owner_id, title, description, thumbnail_photo_url, cover_photo_url, cost_per_night, parking_spaces, number_of_bathrooms, number_of_bedrooms, country, street, city, post_code, province, active)
+INSERT INTO properties (owner_id, title, description, thumbnail_photo_url, cover_photo_url, cost_per_night, parking_spaces, number_of_bedrooms, number_of_bathrooms, country, street, city, post_code, province, active)
 VALUES (1, 'Cozy Central Apartment', 'description', 'photo_url', 'cover photo url', 189, 0, 1, 1, 'Canada', '186 Barlow Street', 'Vancouver', 'V6G 9D5', 'BC', true),
 (2, 'Nice Bungalo', 'description', 'photo_url', 'cover photo url', 110, 1, 2, 2, 'Canada', '7865 22nd Avenue', 'Calgary', 'T5D 2FW', 'AB', false),
 (3, 'Good Location Townhouse', 'description', 'photo_url', 'cover photo url', 175, 2, 1.5, 3, 'Canada', '4 Rue Varos', 'Montreal', 'X8B 1Y1', 'QC', true);
