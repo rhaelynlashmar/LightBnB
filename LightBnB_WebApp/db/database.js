@@ -100,22 +100,23 @@ const addUser = function(user) {
  */
 const getAllReservations = function (guest_id, limit = 10) {
   const queryString = `
-  SELECT reservations.*, properties.*, users.*
-  FROM reservations
-  JOIN properties ON reservations.property_id = properties.id
-  JOIN users ON properties.owner_id = users.id
-  WHERE reservations.guest_id = $1
-  LIMIT $2;
-`;
-const values = [guest_id, limit];
+    SELECT reservations.*, properties.*, AVG(property_reviews.rating) as average_rating
+    FROM reservations
+    JOIN properties ON reservations.property_id = properties.id
+    JOIN property_reviews ON properties.id = property_reviews.property_id
+    WHERE reservations.guest_id = $1
+    GROUP BY reservations.id, properties.id
+    LIMIT $2;
+  `;
+  const values = [guest_id, limit];
 
-return pool
-  .query(queryString, values)
-  .then(res => res.rows)
-  .catch(err => {
-    console.error('query error', err.stack);
-    return null;
-  });
+  return pool
+    .query(queryString, values)
+    .then(res => res.rows)
+    .catch(err => {
+      console.error('query error', err.stack);
+      return null;
+    });
 };
 
 /// Properties
