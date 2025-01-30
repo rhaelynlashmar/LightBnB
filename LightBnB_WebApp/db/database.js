@@ -105,9 +105,9 @@ const getAllReservations = function (guest_id, limit = 10) {
     JOIN properties ON reservations.property_id = properties.id
     JOIN property_reviews ON properties.id = property_reviews.property_id
     WHERE reservations.guest_id = $1
-      AND reservation.end_date < now()::date
+      AND reservations.end_date < now()::date
     GROUP BY reservations.id, properties.id
-    ORDER BY reservation.start_date DESC
+    ORDER BY reservations.start_date DESC
     LIMIT $2;
   `;
   const values = [guest_id, limit];
