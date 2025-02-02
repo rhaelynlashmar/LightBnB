@@ -10,7 +10,7 @@ const pool = new Pool({
 });
 
 
-/// Users
+/// USERS
 
 /**
  * Get a single user from the database given their email.
@@ -18,22 +18,25 @@ const pool = new Pool({
  * @return {Promise<{}>} A promise to the user.
  */
 const getUserWithEmail = function (email) {
-  const queryString = `
+  // SQL query to select user by email
+  const queryString = ` 
     SELECT * 
     FROM users 
     WHERE email = $1;
   `;
-  const values = [email.toLowerCase()];
+  const values = [email.toLowerCase()]; // Convert email to lowercase and store values array
 
-  return pool
+  return pool // Execute the query
     .query(queryString, values)
     .then(res => {
+      // If no user is found, return null
       if (res.rows.length === 0) {
         return null;
       }
-      return res.rows[0];
+      return res.rows[0]; // Return the first user found
     })
     .catch(err => {
+      // If error occurs, log the error and return null
       console.error('query error', err.stack);
       return null;
     });
@@ -90,7 +93,7 @@ const addUser = function(user) {
     });
 };
 
-/// Reservations
+/// RESERVATIONS  
 
 /**
  * Get all reservations for a single user.
@@ -213,7 +216,7 @@ const addProperty = function (property) {
     RETURNING *; 
   `;
   
-  const values = [
+  const values = [ 
     property.owner_id, property.title, property.description, property.thumbnail_photo_url, property.cover_photo_url,
     property.cost_per_night, property.street, property.city, property.province, property.post_code, property.country,
     property.parking_spaces, property.number_of_bathrooms, property.number_of_bedrooms
