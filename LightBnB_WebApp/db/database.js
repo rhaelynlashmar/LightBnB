@@ -130,16 +130,63 @@ const getAllReservations = function (guest_id, limit = 10) {
  * @return {Promise<[{}]>}  A promise to the properties.
  */
 const getAllProperties = (options, limit = 10) => {
+  const queryParams = []; // possible parameters for the query
+  
+  // WHERE 1=1 removes the check for an existing WHERE clause and allows the use of AND for all queries
+  let queryString = `
+    SELECT properties.*, AVG(property_reviews.rating) AS average_rating
+    FROM properties
+    LEFT JOIN property_reviews ON properties.id = property_reviews.property_id
+    WHERE 1=1 
+  `;
+
+  // City Search
+  if (options.city) {
+    queryParams.push(`%${options.city}%`); 
+    queryString += `AND LOWER(city) LIKE $${queryParams.length} `;
+  }
+
+  // Owner_id Search
+  if (options.owner_id) {
+    queryParams.push(options.owner_id);
+    queryString += `AND owner_id = $${queryParams.length} `;
+  }
+
+  //  Set Minimum Price 
+  if (options.minimum_price_per_night) {
+    queryParams.push(options.minimum_price_per_night * 100);
+    queryString += `AND cost_per_night >= $${queryParams.length} `;
+  }
+
+  // Set Maximum Price
+  if (options.maximum_price_per_night) {
+    queryParams.push(options.maximum_price_per_night * 100);
+    queryString += `AND cost_per_night <= $${queryParams.length} `;
+  }
+
+  // Adding queries after the WHERE clause, but before the HAVING clause
+  queryString += `
+    GROUP BY properties.id
+  `;
+
+  // Set Minimum Rating
+  if (options.minimum_rating) {
+    queryParams.push(options.minimum_rating);
+    queryString += `HAVING AVG(property_reviews.rating) >= $${queryParams.length} `;
+  }
+
+  // Adding queries after the WHERE clause, but before the HAVING clause
+  queryParams.push(limit);
+  queryString += `
+    ORDER BY cost_per_night
+    LIMIT $${queryParams.length};
+  `;
+
   return pool
-    .query(
-      `SELECT * FROM properties LIMIT $1`, 
-      [limit]
-    )
-    .then((result) => {
-      return result.rows;
-    })
+    .query(queryString, queryParams)
+    .then((result) => result.rows)
     .catch((err) => {
-      console.log(err.message);
+      console.error('query error', err.stack);
       return null;
     });
 };
