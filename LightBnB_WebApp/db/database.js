@@ -79,19 +79,23 @@ const getUserWithId = function (id) {
  * @return {Promise<{}>} A promise to the user.
  */
 const addUser = function(user) {
+  // SQL query to insert a new user
   const queryString = `
     INSERT INTO users (name, email, password)
     VALUES ($1, $2, $3)
     RETURNING *;
   `;
-  const values = [user.name, user.email, user.password];
+  const values = [user.name, user.email, user.password]; // Store user details in values array
 
+  // Execute the query
   return pool
     .query(queryString, values)
     .then(res => {
+      // Return the newly added user
       return res.rows[0];
     })
     .catch(err => {
+      // If error occurs, log error and return null
       console.error('query error', err.stack);
       return null;
     });
