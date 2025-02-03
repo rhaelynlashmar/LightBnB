@@ -33,11 +33,11 @@ This project is part of my learnings within the Web Development Program at Light
 
 ## Dependencies
 
-bycrypt
-cookie-session
-express
-nodemon
-pg
+- bycrypt
+- cookie-session
+- express
+- nodemon
+- pg
 
 
 
