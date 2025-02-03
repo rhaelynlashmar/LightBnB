@@ -1,6 +1,6 @@
 const properties = require("./json/properties.json");
 const users = require("./json/users.json");
-const { Pool } = require ('pg');
+const { Pool } = require('pg');
 
 const pool = new Pool({
   user: 'development',
@@ -17,7 +17,7 @@ const pool = new Pool({
  * @param {String} email The email of the user.
  * @return {Promise<{}>} A promise to the user.
  */
-const getUserWithEmail = function (email) {
+const getUserWithEmail = function(email) {
   // SQL query to select user by email
   const queryString = ` 
     SELECT * 
@@ -40,14 +40,14 @@ const getUserWithEmail = function (email) {
       console.error('query error', err.stack);
       return null;
     });
-  };
+};
 
 /**
  * Get a single user from the database given their id.
  * @param {string} id The id of the user.
  * @return {Promise<{}>} A promise to the user.
  */
-const getUserWithId = function (id) {
+const getUserWithId = function(id) {
   // SQL query to select user by ID
   const queryString = `
     SELECT * 
@@ -101,7 +101,7 @@ const addUser = function(user) {
     });
 };
 
-/// RESERVATIONS  
+/// RESERVATIONS
 
 /**
  * Get all reservations for a single user.
@@ -109,8 +109,8 @@ const addUser = function(user) {
  * @param {string} guest_id The id of the user.
  * @return {Promise<[{}]>} A promise to the reservations.
  */
-const getAllReservations = function (guest_id, limit = 10) { // Get reservations for ONE guest, showing 10 results
-   // SQL query to select reservations with property details and average rating
+const getAllReservations = function(guest_id, limit = 10) { // Get reservations for ONE guest, showing 10 results
+  // SQL query to select reservations with property details and average rating
   const queryString = `
     SELECT reservations.*, properties.*, AVG(property_reviews.rating) as average_rating
     FROM reservations
@@ -136,7 +136,7 @@ const getAllReservations = function (guest_id, limit = 10) { // Get reservations
     });
 };
 
-/// Properties
+/// PROPERTIES
 
 /**
  * Get all properties.
@@ -157,7 +157,7 @@ const getAllProperties = (options, limit = 10) => {
 
   // City Search
   if (options.city) {
-    queryParams.push(`%${options.city}%`); 
+    queryParams.push(`%${options.city}%`);
     queryString += `AND LOWER(city) LIKE $${queryParams.length} `;
   }
 
@@ -167,7 +167,7 @@ const getAllProperties = (options, limit = 10) => {
     queryString += `AND owner_id = $${queryParams.length} `;
   }
 
-  //  Set Minimum Price 
+  //  Set Minimum Price
   if (options.minimum_price_per_night) {
     queryParams.push(options.minimum_price_per_night * 100);
     queryString += `AND cost_per_night >= $${queryParams.length} `;
@@ -213,7 +213,7 @@ const getAllProperties = (options, limit = 10) => {
  */
 
 // RETURNING at the base of the code block, will return the full property record
-const addProperty = function (property) {
+const addProperty = function(property) {
   const queryString = `
     INSERT INTO properties (
       owner_id, title, description, thumbnail_photo_url, cover_photo_url, 
@@ -228,7 +228,7 @@ const addProperty = function (property) {
     RETURNING *; 
   `;
   
-  const values = [ 
+  const values = [
     property.owner_id, property.title, property.description, property.thumbnail_photo_url, property.cover_photo_url,
     property.cost_per_night, property.street, property.city, property.province, property.post_code, property.country,
     property.parking_spaces, property.number_of_bathrooms, property.number_of_bedrooms
