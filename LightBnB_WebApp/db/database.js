@@ -109,7 +109,8 @@ const addUser = function(user) {
  * @param {string} guest_id The id of the user.
  * @return {Promise<[{}]>} A promise to the reservations.
  */
-const getAllReservations = function (guest_id, limit = 10) {
+const getAllReservations = function (guest_id, limit = 10) { // Get reservations for ONE guest, showing 10 results
+   // SQL query to select reservations with property details and average rating
   const queryString = `
     SELECT reservations.*, properties.*, AVG(property_reviews.rating) as average_rating
     FROM reservations
@@ -121,12 +122,15 @@ const getAllReservations = function (guest_id, limit = 10) {
     ORDER BY reservations.start_date DESC
     LIMIT $2;
   `;
-  const values = [guest_id, limit];
+  const values = [guest_id, limit]; // Store guest_id and limit in the values array
 
+  // Execute the query
   return pool
     .query(queryString, values)
     .then(res => res.rows)
+    // Return the rows of results
     .catch(err => {
+      // If error occurs, log error and return null
       console.error('query error', err.stack);
       return null;
     });
