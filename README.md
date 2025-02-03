@@ -13,7 +13,7 @@ This project is part of my learnings within the Web Development Program at Light
 - View Listings
 - Filter Listings using city, price, and average rating
 
---- If you're a "Registered User" you can: ---
+**--- If you're a _Registered User_ you can: ---**
 
 - Create Listing, store and view said Listing
 - View all previous Reservation history
@@ -22,7 +22,7 @@ This project is part of my learnings within the Web Development Program at Light
 ## Getting Started 
 
 1. Clone Repository to your local device
-2. From the LightBnB directory on the terminal command line run **psql** 
+2. From the LightBnB directory on the terminal command line run ```**psql**``` 
 3. In the psql command line type **CREATE DATABASE lightbnb;**
 5. Enter **\c lightbnb;** and use the command **\i migrations/01_schema.sql** to create the tables 
 7. Run **\i seeds/02_seeds.sql** in the psql command line to add data to tables
