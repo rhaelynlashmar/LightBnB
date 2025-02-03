@@ -22,13 +22,13 @@ This project is part of my learnings within the Web Development Program at Light
 ## Getting Started 
 
 1. Clone Repository to your local device
-2. From the LightBnB directory on the terminal command line run ```**psql**``` 
-3. In the psql command line type **CREATE DATABASE lightbnb;**
-5. Enter **\c lightbnb;** and use the command **\i migrations/01_schema.sql** to create the tables 
-7. Run **\i seeds/02_seeds.sql** in the psql command line to add data to tables
-6. Exit psql (**\q;**)
+2. From the LightBnB directory on the terminal command line run ```psql``` 
+3. In the psql command line type ```CREATE DATABASE lightbnb;```
+5. Enter ```\c lightbnb;``` and use the command ```\i migrations/01_schema.sql``` to create the tables 
+7. Run ```\i seeds/02_seeds.sql``` in the psql command line to add data to tables
+6. Exit psql (```\q;```)
 2. Change into the <ins>LightBnB-WebApp</ins> folder to install Dependencies using the command **npm install** 
-8. Start the web server using the command **npm run local** 
+8. Start the web server using the command ```npm run local```
 9. Go to http://localhost:3000/ in your browser
 
 ## Dependencies
